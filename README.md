@@ -106,3 +106,44 @@
 > ![imgs](png/p10.png)
 
 > Password: **G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s**
+
+## **Bandit Level 10 → Level 11**
+
+- Sau khi `ls` và `cat` thử file `data.txt` ta thấy một đoạn decode base64.
+- Ta dùng lệnh `cat data.txt | base64 --decode` và có được password.
+
+> ![imgs](png/p11.png)
+
+> Password: **6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM**
+
+## **Bandit Level 11 → Level 12**
+
+- Như bài số 11 nhưng ở đây là `ROT13`.
+- Ta dùng lệnh sau để có được password: `cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'`
+  
+> ![imgs](png/p12.png)
+
+Password: **JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv**
+
+
+## **Bandit Level 12 → Level 13**
+
+- Theo đề bài thì ta làm như sau:
+- Dùng lệnh `mkdir /tmp/vawn04` để tạo thêm 1 tệp mới.
+- `cp data.txt /tmp/vawn04` để `copy` file `data.txt` vào `/tmp/vawn04` và `cd /tmp/vawn04` để vào thư mục.
+- Sau đó , dùng lệnh `xxd -r * > lmao` để chuyển `data.txt` và xuất thành file `lmao`.
+- Tiếp đến dùng lệnh `file lmao` để kiểm tra định dạng file.
+- Biết được đây là dạng `gzip compressed data`.
+- Ta dùng lệnh `mv lmao lmao.gz`.
+- Sau đó tiến hành giải nén nó ra bằng lệnh `gzip -d lmao.gz`.
+- Ta tiếp tục có được file `lmao`.
+
+> ![imgs](png/p13.png)
+
+- Sau nhiều lần kiểm tra và giải nén file qua nhiều định dạng khác nhau.
+
+> ![imgs](png/p14.png)
+
+- Ta có được password sau:
+
+> Password: **wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw**
