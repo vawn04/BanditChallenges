@@ -240,7 +240,7 @@ Password: **JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv**
 
 > ![imgs](png/p24.png)
 
-> Password: **8ca319486bfbbc3663ea0fbe81326349**
+> Password: **QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G**
 
 ## **Bandit Level 23 → Level 24**
 
@@ -377,4 +377,4 @@ cat /etc/bandit_pass/bandit26
 
 ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯
 
-> ![imgs](png/p36.png)
+> ![imgs](png/p37.png)
