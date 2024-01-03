@@ -147,3 +147,234 @@ Password: **JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv**
 - Ta có được password sau:
 
 > Password: **wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw**
+
+
+## **Bandit Level 13 → Level 14**
+
+- Ta dùng `ssh -i sshkey.private bandit14@localhost -p 2220` để ssh vào bandit14
+- Sau đó dùng `cat etc/bandit_pass/bandit14` và có được pass
+
+> ![imgs](png/p15.png)
+
+> Password: **fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq**
+
+## **Bandit Level 14 → Level 15**
+
+- Theo đề bài ta `nc localhost 30000`
+- Và nhập pass level hiện tại vào và có được pass level tiếp theo.
+
+> ![imgs](png/p16.png)
+
+> Password: **jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt**
+
+
+## **Bandit Level 15 → Level 16**
+
+- Dùng lệnh `openssl s_client localhost:30001` để kết nối đến server.
+- `s_client`: Đây là một chế độ của OpenSSL dùng để thực hiện vai trò của một máy khách SSL/TLS.
+- Sau đó nhập pass vào và có được pass level tiếp.
+
+> ![imgs](png/p17.png)
+
+> Password: **JQttfApK4SeyHwDlI9SXGR50qclOAil1**
+
+## **Bandit Level 16 → Level 17**
+
+- Theo đề ta dùng lệnh `nmap -p 31000-32000 localhost` để quét các cổng.
+- Kiểm tra đến cổng `31790` ta thấy nó trả lại một đoạn RSA.
+- Tiếp theo ta tạo 1 folder mới, sau đó dùng `nano key.private` để tạo một file và paste đoạn RSA đó vào.
+- Tiếp đến dùng `chmod 700 key.private` để sửa quyền, rồi connect lại ta có được pass.
+
+> ![imgs](png/p18.png)
+
+> Password: **VwOSWtCA7lRKkTfbr2IDh6awj9RNZM5e**
+
+## **Bandit Level 17 → Level 18**
+
+- Ở bài này ta dùng `diff passwords.old passwords.new` và có được pass.
+
+> ![imgs](png/p19.png)
+
+> Password: **hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg**
+
+
+## **Bandit Level 18 → Level 19**
+
+- Dùng lệnh `ssh bandit18@bandit.labs.overthewire.org -p 2220 cat readme` để cat file khi connect vào server ta có được pass.
+
+> ![imgs](png/p20.png)
+
+> Password: **awhqfNnAbc1naukrpqDYcF95h7HoMTrC**
+
+## **Bandit Level 19 → Level 20**
+
+ Ở bài này ta sử dụng `setuid` để chạy file.
+ `./bandit20-do cat /etc/bandit_pass/bandit20` ta có pass cho level tiếp theo.
+
+> ![imgs](png/p21.png)
+
+> Password: **VxCazJaVykI6W36BkBU0mJTCM8rR95XT**
+
+## **Bandit Level 20 → Level 21**
+
+- Ở đây ta cần tạo một cổng mới ngẫu nhiên.
+- `echo "VxCazJaVykI6W36BkBU0mJTCM8rR95XT" | nc -l -p 1810 &`.
+
+> ![imgs](png/p22.png)
+
+> Password: **NvEJF7oVjkddltPSrdKEFOllh9V1IBcq**
+
+## **Bandit Level 21 → Level 22**
+
+- `cd /etc/cron.d/` và kiểm tra thì thấy file `cronjob_bandit22` và `cat` file ra.
+- Tiếp tục `cat /usr/bin/cronjob_bandit22.sh`.
+- Và `cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv` ta có được pass.
+
+> ![imgs](png/p23.png)
+
+> Password: **WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff**
+
+## **Bandit Level 22 → Level 23**
+
+- Gần tương tự bài trên nhưng ở đây ta cần thực thi lệnh `echo I am user bandit23 | md5sum | cut -d ' ' -f 1` để có được pass.
+
+> ![imgs](png/p24.png)
+
+> Password: **8ca319486bfbbc3663ea0fbe81326349**
+
+## **Bandit Level 23 → Level 24**
+
+- Theo để bài ta tạo một folder mới và 1 file script shell.
+- Sau đó paste đoạn sao vào:
+  
+ ```bash
+#!/bin/bash
+
+cat /etc/bandit_pass/bandit24 > /tmp/bandit24.txt
+```
+  
+- Tiếp tục làm theo đề bài ta có được pass.
+
+> ![imgs](png/p25.png)
+
+> Password: **VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar**
+
+## **Bandit Level 24 → Level 25**
+
+- Ta tạo một file trong tmp với nội dung như sau:
+
+```bash
+#! /bin/bash 
+
+pass=VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+
+for i in {0000..9999}
+do
+        echo "$pass" "$i"
+done
+```
+- Cấp quyền cho nó, sau đó chạy ta có được pass.
+
+> ![imgs](png/p26.png)
+> ![imgs](png/p27.png)
+
+> Password: **p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d**
+
+## **Bandit Level 25 → Level 26**
+
+- Ở bài này ta cần thu nhỏ terminal lại, ssh theo lệnh sau :
+
+```
+ssh -i bandit26.sshkey -p 2220 -l bandit26 bandit.labs.overthewire.org
+```
+
+- Ấn v để chuyển sang vim sau đó nhập lệnh
+
+```
+:set shell =/bin/bash 
+:shell
+```
+
+- Dùng lệnh cat để đọc flag trong file text.txt
+
+```
+cat /etc/bandit_pass/bandit26
+```
+
+> ![imgs](png/p28.png)
+
+> Password: **c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1**
+
+## **Bandit Level 26 → Level 27**
+
+- Tương tự như bài trên.
+
+> ![imgs](png/p29.png)
+
+> Password: **YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS**
+
+## **Bandit Level 27 → Level 28**
+
+- Ta tạo 1 folder ở tmp để clone repo.
+- Dùng lệnh `git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo` để clone repo.
+- `cd repo` , thấy có 1 file README.
+- `cat README` , và có pass.
+
+> ![imgs](png/p30.png)
+
+> Password: **AVanL161y9rsbcJIsFHuw35rjaOM19nR**
+
+## **Bandit Level 28 → Level 29**
+
+- Tương tự bài trước ta git clone ra.
+- Nhưng mật khẩu ở bài này bị ẩn.
+- Nên ta dùng `git log` để xem `commit`
+- Dùng `git show` để xem chi tiết.
+
+> ![imgs](png/p31.png)
+> ![imgs](png/p32.png)
+
+> Password: **tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S**
+
+## **Bandit Level 29 → Level 30**
+
+- Tương tự bài trước.
+- Sau khi kiểm tra mà không thấy gì, ta dùng `git checkout dev` để chuyển branch `origin` sang `dev`.
+- Tiếp tục kiểm tra và tìm được pass.
+  
+> ![imgs](png/p33.png)
+
+> Password: **xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS**
+
+## **Bandit Level 30 → Level 31**
+
+- Vẫn tương tự như bài trên.
+- Nhưng ở đây ta dùng `git tag` để xem nhãn repo này.
+
+> ![imgs](png/p34.png)
+
+> Password: **OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt**
+
+
+## **Bandit Level 31 → Level 32**
+
+- Với bài này ta dung `git push`.
+
+> ![imgs](png/p35.png)
+
+> Password: **rmCBvG56y58BXzv98yZGdO7ATVL5dW8y**
+
+
+## **Bandit Level 32 → Level 33**
+
+- Ở bài này ta sử dụng $0 vì $0 biểu diễn cho một shell hay bắt đầu của một shell.
+
+> ![imgs](png/p36.png)
+
+> Password: **odHo63fHiFqcWWJG9rLiLDtPm45KzUKy**
+
+## **THE END!!**
+
+¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯
+
+> ![imgs](png/p36.png)
